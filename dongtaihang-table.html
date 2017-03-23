@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<style>
+			.dongtaitable tr:nth-child(odd){background:#F4F4F4;}
+			.dongtaitable td:nth-child(even){color:#C00;}
+		</style>
+		
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<script>
+			function insRow() {
+				var table = document.getElementById("qingkuang_table");
+				
+				var text1 = $("#text1").val()*1;
+				if(text1>=20){
+					alert("您最多可添加20行");
+					return false;
+				}else{	
+					var newRow = table.insertRow(); //创建新行
+					text1 = $("#text1").val()*1+1;
+					$("#text1").val(text1);
+					var checkbox = newRow.insertCell(0);
+					checkbox.innerHTML = "<td  align='center'><span><input name='checkname' type='checkbox' id='xuanze"+text1+"'></span></td>";
+					checkbox.setAttribute("align","center"); //设置位置
+					
+					var xuhao = newRow.insertCell(1); //创建新单元格
+					xuhao.innerHTML = "<td><span name='xuhao' id='xuhao"+text1+"'>"+text1+"</span></td>" ; //单元格内的内容
+					xuhao.setAttribute("align","center"); //设置位置
+					
+					var gangweimingcheng = newRow.insertCell(2); //创建新单元格
+					gangweimingcheng.innerHTML = "<td> <input type='text' value='' name='gangweimingcheng' id='gangweimingcheng"+text1+"'/> </td>";
+					gangweimingcheng.setAttribute("align","center"); //设置位置
+					
+					var renyuanleixing = newRow.insertCell(3); //创建新单元格
+					renyuanleixing.innerHTML = "<td> <input type='text' value='' name='renyuanleixing'  id='renyuanleixing"+text1+"'/> </td>";
+					renyuanleixing.setAttribute("align","center"); //设置位置
+					
+					var renshu = newRow.insertCell(4); //创建新单元格
+					renshu.innerHTML = "<td> <input type='text' value='' name='renshu'  id='renshu"+text1+"'/> </td>";
+					renshu.setAttribute("align","center"); //设置位置
+					
+					var yuexinbiaozhun = newRow.insertCell(5); //创建新单元格
+					yuexinbiaozhun.innerHTML = "<td> <input type='text' value='' name='yuexinbiaozhun'  id='yuexinbiaozhun"+text1+"'/> </td>";
+					yuexinbiaozhun.setAttribute("align","center"); //设置位置
+
+					var jiankangzhengqingkuang = newRow.insertCell(6); //创建新单元格
+					jiankangzhengqingkuang.innerHTML = "<td> <input type='text' value='' name='jiankangzhengqingkuang'  id='jiankangzhengqingkuang"+text1+"'/> </td>";
+					jiankangzhengqingkuang.setAttribute("align","center"); //设置位置					
+				}
+			}
+			
+			function delRow(){
+				var t1=document.getElementById("qingkuang_table");
+				var rowNum=t1.rows.length;//当前table共有多少行
+				var text1 = $("#text1").val()*1;
+				
+				if(rowNum>2){//保证留下两行
+					t1.deleteRow(rowNum*1-1);
+					text1 = $("#text1").val()*1-1;
+					$("#text1").val(text1);					
+				}	
+			}
+					
+			function delcheckRow(){			
+				var num = document.getElementsByName("checkname").length;//获取编辑域的长度
+				var checkedNum=0;//默认被选中的个数为0
+				var checks = document.getElementsByName("checkname");
+				for(var i=0;i<checks.length;i++){
+					if(checks[i].checked)
+						checkedNum++;
+				}
+				if(num==checkedNum){
+					alert("至少保留一行");
+				}else{
+					$('table :checkbox:checked').closest('tr').remove()	;
+					numCheck();				
+				}
+				
+			}
+			
+			function numCheck(){//删除后，重新规划序号
+				var num = document.getElementsByName("xuhao").length;     //获取编辑域的长度			
+				$("#text1").val(num);
+				for (var i = 0; i < num; i++) {         //进行循环
+					
+					$("span[name='xuhao']").eq(i).html(i+1);
+					var a=i*1+1;
+					$("span[name='xuhao']").eq(i).attr('id','xuhao'+a);
+					$("input[name='gangweimingcheng']").eq(i).attr('id','gangweimingcheng'+a);
+					$("input[name='renyuanleixing']").eq(i).attr('id','renyuanleixing'+a);
+					$("input[name='renshu']").eq(i).attr('id','renshu'+a);
+					$("input[name='yuexinbiaozhun']").eq(i).attr('id','yuexinbiaozhun'+a);
+					$("input[name='jiankangzhengqingkuang']").eq(i).attr('id','jiankangzhengqingkuang'+a);
+				}
+
+			}
+		</script>
+		
+	</head>
+	<body>
+		<table class='dongtaitable' id='qingkuang_table'  width="1040" border="1px" cellspacing="0" cellpadding="1" >   
+			<thead>  
+				<tr class="success">  
+				
+					<th style="with:40px;align:center">复选框</th>
+					<th style="with:40px;align:center">序号</th>
+					<th style="with:192px;align:center">岗位名称</th>  
+					<th style="with:192px;align:center">人员类型</th>
+					<th style="with:192px;align:center">人数</th>
+					<th style="with:192px;align:center">月薪标准</th>
+					<th style="with:192px;align:center">健康证情况</th>   
+				</tr>  
+			</thead>  
+			<tbody id="canyin_shuju_table">
+				<tr id="xuhao_tr_1">	
+					<td  align="center"><input name="checkname" type="checkbox" ></td>
+					<td  align="center"><span name='xuhao' id='xuhao1'>1</span></td>
+					<td  align="center"> <input type='text' value='' name='gangweimingcheng' id='gangweimingcheng1'/> </td>
+					<td  align="center"> <input type='text' value='' name='renyuanleixing'  id='renyuanleixing1'/> </td>
+					<td  align="center"> <input type='text' value='' name='renshu'  id='renshu1'/> </td>
+					<td  align="center"> <input type='text' value='' name='yuexinbiaozhun'  id='yuexinbiaozhun1'/> </td>
+					<td  align="center"> <input type='text' value='' name='jiankangzhengqingkuang'  id='jiankangzhengqingkuang1'/> </td>
+				</tr>
+			</tbody>  
+		</table>
+		<br>
+		<input type="button" onclick="insRow()" value="新增一行">
+		<input type="button" onclick="delRow()" value="删除一行">
+		<input type="button" onclick="delcheckRow()" value="删复选框">
+		<input type="text"  value="1" id="text1">
+	</body>
+</html>
